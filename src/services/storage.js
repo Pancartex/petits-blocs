@@ -1,5 +1,5 @@
 import { BOARD_SIZES, SCORE_LIMIT } from '../core/config.js';
-import { valid } from '../core/validation.js';
+import { valid, validRewind } from '../core/validation.js';
 
 // Preserve this key and envelope so pre-refactor saves continue to load.
 export const STORAGE_KEY = 'little-blocks.v1';
@@ -17,7 +17,10 @@ function normalize(raw) {
   data.sound = Boolean(raw.sound);
   if (['light', 'dark'].includes(raw.theme)) data.theme = raw.theme;
   for (const size of BOARD_SIZES) {
-    if (valid(raw.games?.[size], size)) data.games[size] = raw.games[size];
+    if (valid(raw.games?.[size], size)) {
+      data.games[size] = raw.games[size];
+      if (!validRewind(data.games[size].rewind, data.games[size])) delete data.games[size].rewind;
+    }
     if (isScore(raw.bests?.[size])) data.bests[size] = raw.bests[size];
     if (Array.isArray(raw.scores?.[size])) {
       data.scores[size] = raw.scores[size]
@@ -78,5 +81,15 @@ export function createStore(getStorage = () => window.localStorage) {
     return persist();
   }
 
-  return { data, history, best, record, saveGame, persist, get available() { return available; } };
+  function captureProgress(size) {
+    return structuredClone({ best: data.bests[size] ?? 0, scores: history(size) });
+  }
+
+  function restoreProgress(size, progress) {
+    data.bests[size] = progress.best;
+    data.scores[size] = structuredClone(progress.scores);
+  }
+
+  return { data, history, best, record, saveGame, persist, captureProgress, restoreProgress,
+    get available() { return available; } };
 }

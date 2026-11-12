@@ -25,7 +25,10 @@
     <section class="game" aria-label="Jeu de blocs sans fin">
       <div class="game-heading">
         <h2>Mode infini <span>∞</span></h2>
-        <button id="restart" class="reset-button" aria-label="Recommencer la partie">↺ <span>Recommencer</span></button>
+        <div class="game-actions">
+          <button id="rewind" class="reset-button" aria-label="Annuler le dernier coup" title="Une annulation disponible après chaque pose" disabled>↶ <span>Annuler</span></button>
+          <button id="restart" class="reset-button" aria-label="Recommencer la partie">↺ <span>Recommencer</span></button>
+        </div>
       </div>
       <div class="size-row">
         <div class="size-switch" aria-label="Taille de la grille">

@@ -1,4 +1,4 @@
-import { BOARD_SIZES, COLORS, TRAY_SIZE } from './config.js';
+import { BOARD_SIZES, COLORS, TRAY_SIZE, SCORE_LIMIT } from './config.js';
 
 export function validPiece(piece) {
   return Boolean(piece) && COLORS.includes(piece.color)
@@ -18,4 +18,16 @@ export function valid(state, size) {
     && typeof state.over === 'boolean' && typeof state.recorded === 'boolean'
     && Array.isArray(state.tray) && state.tray.length === TRAY_SIZE
     && state.tray.some(Boolean) && state.tray.every(p => p === null || validPiece(p));
+}
+
+export function validRewind(rewind, current) {
+  const before = rewind?.state;
+  const progress = rewind?.progress;
+  return Boolean(before && progress) && valid(before, current.size)
+    && !before.over && !before.recorded && !Object.hasOwn(before, 'rewind')
+    && before.moves === current.moves - 1
+    && Number.isSafeInteger(progress.best) && progress.best >= 0
+    && Array.isArray(progress.scores) && progress.scores.length <= SCORE_LIMIT
+    && progress.scores.every(entry => entry && Number.isSafeInteger(entry.score) && entry.score >= 0
+      && Number.isSafeInteger(entry.lines) && entry.lines >= 0 && typeof entry.date === 'string');
 }

@@ -43,3 +43,22 @@ export function rotatePieces(tray, selected = -1, direction = 1) {
     }
   }
 }
+
+// Flood-fill empty space from outside the shape; any unreachable gap is a hole.
+export function hasEnclosedHole(cells) {
+  const height = Math.max(...cells.map(([r]) => r)) + 3;
+  const width = Math.max(...cells.map(([, c]) => c)) + 3;
+  const occupied = new Set(cells.map(([r, c]) => `${r + 1},${c + 1}`));
+  const visited = new Set(['0,0']);
+  const queue = [[0, 0]];
+  for (let index = 0; index < queue.length; index++) {
+    const [r, c] = queue[index];
+    for (const [nr, nc] of [[r - 1, c], [r + 1, c], [r, c - 1], [r, c + 1]]) {
+      const key = `${nr},${nc}`;
+      if (nr < 0 || nc < 0 || nr >= height || nc >= width || occupied.has(key) || visited.has(key)) continue;
+      visited.add(key);
+      queue.push([nr, nc]);
+    }
+  }
+  return visited.size + occupied.size < width * height;
+}

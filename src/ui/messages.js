@@ -6,6 +6,7 @@ export const messages = {
   deselected: 'Pièce désélectionnée. Choisis un autre bloc quand tu veux.',
   invalidPlacement: 'Un peu trop serré ! Essaie ailleurs ou tourne le bloc.',
   restarted: 'Une nouvelle petite aventure. Amuse-toi bien !',
+  rewound: 'Dernier coup annulé. Joue une nouvelle pièce pour pouvoir annuler à nouveau.',
   rotation: (all, direction) => all
     ? `Les trois pièces ont tourné de 90° vers la ${direction < 0 ? 'gauche' : 'droite'}.`
     : `Un quart de tour vers la ${direction < 0 ? 'gauche' : 'droite'} (90°).`,
@@ -23,6 +24,8 @@ export const helpHTML = `
     <li>Sélectionne une pièce puis appuie sur Tourner 90° ou sur R : chaque pression la fait pivoter de 90° vers la droite.
       Sans sélection, les trois pièces tournent à la fois. La molette tourne la pièce sélectionnée : vers le haut à gauche, vers le bas à droite.
       Un second clic sur la pièce la désélectionne. La rotation est gratuite et illimitée.</li>
+    <li>Annuler restaure la grille, les pièces et le score avant ta dernière pose. Une seule annulation à la fois :
+      elle redevient disponible après une nouvelle pose. Aucun coût ni limite par partie.</li>
     <li>Chaque bloc placé est immédiatement remplacé. Les deux autres restent disponibles.
       Les nouvelles pièces favorisent les espaces libres de ta grille, sans répéter celle que tu viens de jouer.</li>
     <li>Complète des lignes ou des colonnes pour les effacer. La partie se termine quand aucun bloc ne peut être placé, même après rotation.</li>
