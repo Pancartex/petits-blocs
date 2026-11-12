@@ -1,0 +1,135 @@
+/* A generous board with large, easy-to-reach pieces. */
+.topbar { max-width: 1400px; padding: 16px 28px; }
+main { max-width: 1400px; margin: 20px auto 32px; padding: 0 28px; display: flex; flex-direction: column; align-items: stretch; gap: 18px; }
+.intro { text-align: left; }
+.intro .dedication { display: flex; margin: 0; gap: 12px; }
+.dedication div { font-size: 22px; }
+.dedication small { font-size: 14px; }
+.game { width: 100%; max-width: none; padding: 24px; display: grid; grid-template-columns: minmax(0, 1fr) 240px; gap: 20px 28px; align-items: start; }
+.game-heading, .size-row, .stats, .status { grid-column: 1 / -1; }
+.game-heading h2 { font-size: 30px; }
+.game-heading .eyebrow { font-size: 11px; }
+.icon-button { width: 44px; height: 44px; }
+.size-row { margin: 0; }
+.size-switch button { font-size: 16px; min-height: 44px; padding: 10px 22px; }
+#save-label { font-size: 12px; color: #62705d; }
+.stats { margin: 0; grid-template-columns: repeat(3, 1fr); }
+.stats span { font-size: 12px; color: #62705d; }
+.stats strong { font-size: 34px; }
+.board-wrap { min-width: 0; }
+#board { border-width: 10px; gap: 5px; background: #cbd5c5; border-color: #cbd5c5; }
+.cell { background: #f0f3e9; border-radius: 5px; }
+.play-tools { display: flex; flex-direction: column; min-width: 0; gap: 16px; }
+.tray-caption { margin: 0; flex-direction: column; gap: 8px; font-size: 12px; color: #62705d; }
+#tray { grid-template-columns: 1fr; gap: 14px; }
+.piece { height: 146px; border: 2px solid #e0e5d8; }
+.piece.selected { border: 3px solid #426753; background: #e5eddc; }
+.mini-cell { width: 24px; height: 24px; border-radius: 5px; }
+.controls { margin: 0; display: grid; grid-template-columns: 1fr 48px; gap: 12px 8px; }
+.controls button { min-height: 48px; border-radius: 10px; background: #e6eddf; padding: 8px; }
+.controls button span { font-size: 16px; }
+.controls kbd { font-size: 12px; }
+.controls > span { grid-column: 1 / -1; grid-row: 2; font-size: 13px; color: #62705d; }
+.text-button { margin: 0; align-self: center; font-size: 14px; padding: 10px 0; }
+.text-button span { padding-left: 8px; }
+.status { font-size: 14px; margin: 0; color: #53664b; }
+footer { max-width: 1344px; margin: 0 28px; }
+@media (max-width: 1000px) {
+  main { padding: 0 18px; }
+  .game { padding: 18px; gap: 18px; grid-template-columns: minmax(0, 1fr) 190px; }
+  .piece { height: 118px; }
+  .mini-cell { width: 19px; height: 19px; }
+  .controls button span { font-size: 14px; }
+  .controls kbd { display: none; }
+}
+@media (max-width: 850px) {
+  .topbar { padding: 12px 16px; }
+  main { margin: 14px auto 24px; padding: 0 10px; gap: 14px; }
+  .intro { align-self: center; }
+  .intro .dedication { display: flex; text-align: left; }
+  .dedication div { font-size: 20px; }
+  .dedication small { font-size: 12px; }
+  .game { display: flex; flex-direction: column; padding: 14px; gap: 16px; }
+  .game > * { width: 100%; }
+  .game-heading h2 { font-size: 26px; }
+  .size-row { flex-wrap: wrap; gap: 10px; }
+  .size-switch button { font-size: 15px; padding: 8px 16px; }
+  .stats strong { font-size: 30px; }
+  .stats span { font-size: 10px; }
+  .stats > div { padding-left: 14px; }
+  #board { border-width: 7px; gap: 3px; }
+  .play-tools { gap: 12px; }
+  .tray-caption { flex-direction: row; justify-content: space-between; font-size: 10px; }
+  #tray { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  .piece { height: 120px; padding: 5px; }
+  .mini-grid { gap: 2px; }
+  .mini-cell { width: clamp(12px, 3.3vw, 24px); height: clamp(12px, 3.3vw, 24px); border-radius: 3px; }
+  .controls { grid-template-columns: 1fr 52px; }
+  .controls button span { font-size: 17px; }
+  .controls kbd { display: inline; }
+  .controls > span { font-size: 12px; }
+  .status { font-size: 12px; }
+}
+
+/* Fit the square board to the remaining viewport height, as well as width. */
+.topbar { height: 54px; padding: 8px 20px; }
+main { height: calc(100vh - 66px); height: calc(100dvh - 66px); margin: 6px auto; gap: 8px; max-width: 1240px; }
+.intro { flex-shrink: 0; }
+.dedication > span { font-size: 28px; }
+.dedication div { font-size: 18px; }
+.dedication small { display: inline; font-size: 12px; margin-left: 12px; }
+.game { flex: 1; min-height: 0; padding: 14px; display: grid; grid-template-columns: minmax(0, 1fr) 220px; grid-template-rows: auto auto auto minmax(0, 1fr) auto; gap: 10px 20px; align-items: stretch; }
+.game-heading h2 { font-size: 24px; margin: 0; }
+.game-heading .eyebrow { display: none; }
+.icon-button { width: 38px; height: 38px; }
+.size-switch button { font-size: 14px; min-height: 36px; padding: 7px 18px; }
+.stats span { font-size: 10px; margin-bottom: 2px; }
+.stats strong { font-size: 27px; }
+.board-wrap { min-width: 0; min-height: 0; container-type: size; display: flex; align-items: center; justify-content: center; }
+#board { flex-shrink: 0; width: min(100cqw, 100cqh); height: min(100cqw, 100cqh); border-width: 7px; gap: 3px; }
+.cell { min-height: 0; }
+.play-tools { min-height: 0; gap: 8px; }
+.tray-caption { font-size: 10px; gap: 4px; }
+#tray { flex: 1; min-height: 0; grid-template-rows: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.piece { height: 100%; min-height: 0; padding: 4px; }
+.mini-grid { gap: 2px; }
+.mini-cell { width: clamp(9px, 1.8dvh, 22px); height: clamp(9px, 1.8dvh, 22px); }
+.controls { grid-template-columns: 1fr 42px; gap: 6px; }
+.controls button { min-height: 40px; padding: 6px; }
+.controls button span { font-size: 14px; }
+.controls kbd { font-size: 10px; }
+.controls > span { font-size: 11px; }
+.text-button { font-size: 12px; padding: 6px 0; }
+.status { font-size: 12px; line-height: 1.4; }
+footer { display: none; }
+@media (max-width: 850px) {
+  .topbar { height: 48px; padding: 6px 12px; }
+  main { height: calc(100vh - 56px); height: calc(100dvh - 56px); margin: 4px auto; padding: 0 8px; gap: 6px; }
+  .dedication div { font-size: 17px; }
+  .dedication small { font-size: 10px; margin-left: 6px; }
+  .dedication > span { font-size: 25px; }
+  .game { display: flex; flex-direction: column; padding: 10px; gap: 8px; }
+  .game > * { width: 100%; flex-shrink: 0; }
+  .game-heading { display: none; }
+  .size-row { flex-wrap: nowrap; gap: 6px; }
+  .size-switch button { font-size: 13px; min-height: 34px; padding: 6px 12px; }
+  #save-label { font-size: 9px; max-width: 100px; }
+  .stats strong { font-size: 24px; }
+  .stats span { font-size: 9px; }
+  .board-wrap { flex: 1; min-height: 0; }
+  #board { border-width: 5px; gap: 2px; }
+  .play-tools { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; }
+  .tray-caption { display: none; }
+  #tray { grid-column: 1 / -1; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: 76px; gap: 7px; }
+  .mini-cell { width: clamp(10px, 1.9dvh, 13px); height: clamp(10px, 1.9dvh, 13px); }
+  .controls { grid-template-columns: minmax(0, 1fr) 40px; }
+  .controls > span, .controls kbd { display: none; }
+  .controls button span { font-size: 13px; }
+  .text-button, .status { font-size: 10px; }
+}
+/* Keep controls reachable in exceptionally short windows. */
+@media (max-height: 540px) {
+  main { min-height: 480px; height: auto; }
+  .game { flex: none; height: 444px; }
+  .mini-cell { width: 8px; height: 8px; }
+}
