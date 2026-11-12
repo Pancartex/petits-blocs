@@ -1,30 +1,65 @@
 <!doctype html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#f6f3ec"><meta name="description" content="Une petite pause pour toi. Un jeu de blocs sans fin et sans publicité, fait avec amour.">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f6f3ec">
+  <meta name="description" content="Une petite pause pour toi. Un jeu de blocs sans fin et sans publicité, fait avec amour.">
   <title>Petits blocs · Juste pour toi</title>
-  <link rel="icon" href="icon.svg" type="image/svg+xml"><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="play-layout.css"><link rel="stylesheet" href="theme.css">
-  <script src="engine.js" defer></script><script src="game.js" defer></script>
+  <link rel="icon" href="./assets/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles/main.css">
+  <script type="module" src="./src/app.js"></script>
 </head>
 <body>
-<header class="topbar"><a class="brand" href="./"><span class="brand-mark" aria-hidden="true">▦</span> petits blocs<span class="brand-dot">.</span></a><span class="top-note">une petite pause pour toi</span><button id="theme" class="icon-button" aria-label="Activer le mode sombre" aria-pressed="false">☾</button><button id="sound" class="icon-button" aria-label="Activer le son" aria-pressed="false">♪</button><button id="help" class="icon-button" aria-label="Comment jouer">?</button></header>
-<main>
-  <aside class="intro"><div class="dedication"><span aria-hidden="true">♡</span><div>Juste pour toi.<small>Un petit jeu, beaucoup d’amour.</small></div></div></aside>
-  <section class="game" aria-label="Jeu de blocs sans fin">
-    <div class="game-heading"><div><span class="eyebrow">TA PETITE BULLE</span><h2>Mode infini <span>∞</span></h2></div><button id="restart" class="reset-button" aria-label="Recommencer la partie">↺ <span>Recommencer</span></button></div>
-    <div class="size-row"><div class="size-switch" aria-label="Taille de la grille"><button data-size="8" aria-pressed="true">8 × 8</button><button data-size="10" aria-pressed="false">10 × 10</button><button data-size="12" aria-pressed="false">12 × 12</button></div><span id="save-label">Sauvegardé sur cet appareil</span></div>
-    <div class="stats"><div><span>SCORE</span><strong id="score">0</strong></div><div><span>TON RECORD</span><strong id="best">0</strong></div><div><span>LIGNES</span><strong id="lines">0</strong></div></div>
-    <div class="board-wrap"><div id="board" role="group" aria-label="Grille de jeu"></div><div id="celebration" aria-hidden="true"></div></div>
-    <div class="play-tools"><div class="tray-caption"><span>TES PROCHAINS BLOCS</span><span id="combo">Prends ton temps</span></div>
-    <div id="tray" aria-label="Blocs disponibles"></div>
-    <div class="controls"><button id="rotate" aria-label="Tourner les trois pièces de 90 degrés vers la droite" title="Sans sélection : tourner les trois pièces de 90° (R)">↻ <span>Tout tourner 90°</span><kbd>R</kbd></button><span>Glisse un bloc, ou touche puis place</span></div>
-    <button id="scores" class="text-button">Tes meilleurs moments <span>↗</span></button></div>
-    <p id="status" class="status" role="status" aria-live="polite">Choisis un bloc pour commencer. Prends ton temps.</p>
-  </section>
-</main>
-<footer><span>FAIT AVEC <b>♡</b> ET UN PEU DE MALICE</span><span>Toujours gratuit. Toujours sans pub.</span></footer>
-<dialog id="dialog"><button id="close-dialog" class="dialog-close icon-button" aria-label="Fermer la fenêtre">×</button><div id="dialog-content"></div></dialog>
-</body></html>
-
-
+  <header class="topbar">
+    <a class="brand" href="./"><span class="brand-mark" aria-hidden="true">▦</span> petits blocs<span class="brand-dot">.</span></a>
+    <span class="top-note">une petite pause pour toi</span>
+    <button id="theme" class="icon-button" aria-label="Activer le mode sombre" aria-pressed="false">☾</button>
+    <button id="sound" class="icon-button" aria-label="Activer le son" aria-pressed="false">♪</button>
+    <button id="help" class="icon-button" aria-label="Comment jouer">?</button>
+  </header>
+  <main>
+    <aside class="intro">
+      <div class="dedication"><span aria-hidden="true">♡</span><div>Juste pour toi.<small>Un petit jeu, beaucoup d’amour.</small></div></div>
+    </aside>
+    <section class="game" aria-label="Jeu de blocs sans fin">
+      <div class="game-heading">
+        <h2>Mode infini <span>∞</span></h2>
+        <button id="restart" class="reset-button" aria-label="Recommencer la partie">↺ <span>Recommencer</span></button>
+      </div>
+      <div class="size-row">
+        <div class="size-switch" aria-label="Taille de la grille">
+          <button data-size="8" aria-pressed="true">8 × 8</button>
+          <button data-size="10" aria-pressed="false">10 × 10</button>
+          <button data-size="12" aria-pressed="false">12 × 12</button>
+        </div>
+        <span id="save-label">Sauvegardé sur cet appareil</span>
+      </div>
+      <div class="stats">
+        <div><span>SCORE</span><strong id="score">0</strong></div>
+        <div><span>TON RECORD</span><strong id="best">0</strong></div>
+        <div><span>LIGNES</span><strong id="lines">0</strong></div>
+      </div>
+      <div class="board-wrap">
+        <div id="board" role="group" aria-label="Grille de jeu"></div>
+        <div id="celebration" aria-hidden="true"></div>
+      </div>
+      <div class="play-tools">
+        <div class="tray-caption"><span>TES PROCHAINS BLOCS</span><span id="combo">Prends ton temps</span></div>
+        <div id="tray" aria-label="Blocs disponibles"></div>
+        <div class="controls">
+          <button id="rotate" aria-label="Tourner les trois pièces de 90 degrés vers la droite" title="Sans sélection : tourner les trois pièces de 90° (R)">↻ <span>Tout tourner 90°</span><kbd>R</kbd></button>
+          <span>Glisse un bloc, ou touche puis place</span>
+        </div>
+        <button id="scores" class="text-button">Tes meilleurs moments <span>↗</span></button>
+      </div>
+      <p id="status" class="status" role="status" aria-live="polite">Choisis un bloc pour commencer. Prends ton temps.</p>
+    </section>
+  </main>
+  <dialog id="dialog">
+    <button id="close-dialog" class="dialog-close icon-button" aria-label="Fermer la fenêtre">×</button>
+    <div id="dialog-content"></div>
+  </dialog>
+  <noscript>Active JavaScript dans ton navigateur pour jouer à Petits blocs.</noscript>
+</body>
+</html>

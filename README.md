@@ -1,46 +1,115 @@
-# Little Blocks
+# Petits blocs
 
-A cozy, ad-free endless block puzzle, made for someone special. Original artwork and code; inspired by the block-puzzle genre, not affiliated with Blockanza.
+A French, ad-free endless block puzzle, made for someone special. Original code and artwork, inspired by the block-puzzle genre; not affiliated with Blockanza.
+
+## Run locally
+
+Install a current Node.js LTS version, then open a terminal in this folder:
+
+```sh
+node scripts/serve.js
+```
+
+Open http://localhost:8080. For another port: `node scripts/serve.js 8081`.
+If your Node installation includes npm, `npm start` is an equivalent convenience command.
+
+There are **no dependencies to install and no build step**. The browser loads native JavaScript modules. Use a local HTTP server or GitHub Pages; opening `index.html` directly as a file is no longer supported because browser module loading requires HTTP(S).
 
 ## Play
 
-Open `index.html` in a modern browser. No installs, build tools, accounts, ads, analytics, fonts, libraries, or external requests are required. For consistent localStorage behavior, use the published HTTPS site or a local web server rather than relying on file URLs.
+- Pick an 8×8, 10×10, or 12×12 board. Each size keeps its own run and top ten completed/restarted scores.
+- Drag a piece, or select it and tap a cell for its top-left corner. Click a selected piece again to deselect it.
+- The rotate button or **R** turns the selected piece 90° clockwise. With nothing selected, it turns all three pieces. Rotation is free and unlimited.
+- Mouse wheel up/down rotates only the selected piece counterclockwise/clockwise. Ctrl+wheel keeps browser zoom behavior.
+- Keyboard: **1–3** selects; **arrows** move the board cursor; **Enter/Space** places; **Escape** deselects.
+- Complete rows and columns to clear them simultaneously. Each placement immediately replaces that one piece.
+- The game ends when no actual tray piece fits, even after rotation. No timer, ads, accounts, analytics, or external assets.
+- Optional sound is off by default. Light/dark mode and sound preferences are saved.
 
-- Choose an 8×8, 10×10, or 12×12 board. Each size remembers its own run, personal best, and ten completed/restarted scores.
-- Drag a piece, or select it and tap a cell to place its top-left corner. Rotation is always free. The rotate button (or R) rotates the selected piece 90° clockwise, or all three pieces when none is selected. Mouse-wheel rotation affects only the selected piece.
-- Fill whole rows or columns. All completed lines clear simultaneously. Every placed piece is immediately replaced; the other two stay available. The pool contains 29 shapes with random orientations, including crosses, cups, stairs, long zigzags, and branched pieces.
-- No timer. A run ends only when no remaining piece fits in any rotation.
-- Keyboard: 1–3 select, R rotates, arrows move the board cursor, Enter/Space places, Escape deselects.
-- Sound is optional and off by default.
-- Replacement pieces never repeat the shape just played (including rotated versions). Shapes already held have a 0.015 generation weight; related shape families have a 0.08 weight, versus 1 for unrelated shapes. New pieces avoid colors already in the tray.
-- Use the top-bar theme toggle for light/dark mode. Both palettes use distinct, saturated block colors; your theme preference is saved.
+### Dealing and scores
 
-Score: 10 points per placed square + 100 × (lines cleared on that move)². Consecutive clearing moves add 50 × (streak length − 1).
+There are 44 distinct shapes, including cups, rings, crosses, crowns, stairs, and zigzags, with random starting orientations.
 
-## Publish for free on GitHub Pages
+Replacements never repeat the shape just played, including rotations. Already-held shapes have weight 0.015; shapes from an already-held family have weight 0.08; unrelated shapes have weight 1. New pieces avoid colors currently held.
 
-1. Create a **public** GitHub repository (Pages is available for public repositories on GitHub Free).
-2. Put the contents of this folder in the repository root, and commit/push to `main`. `index.html` must be at the root, not inside another folder.
-3. In the repository, open **Settings → Pages**.
-4. Under **Build and deployment**, choose **Deploy from a branch**, select **main** and **/ (root)**, then **Save**.
-5. After deployment finishes, Pages shows the URL, typically `https://YOUR-USERNAME.github.io/YOUR-REPO/`.
+When a held piece fits, 90% of draws are restricted to shapes that fit in at least one rotation, whenever such shapes exist. Other draws use the full eligible pool. If no held piece fits, a playable replacement is guaranteed whenever an eligible shape fits. The no-immediate-repeat rule always takes precedence. This does not guarantee that a whole sequence of future moves is solvable.
 
-No GitHub Actions workflow, build step, domain purchase, or backend is needed. All paths are relative so repository subpaths work.
+Score per move: **10 × squares placed + 100 × lines cleared² + 50 × extra consecutive clearing moves**.
 
-Official instructions: https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site
+## Code structure
 
-## Personalize
+```text
+index.html              Accessible French page structure
+assets/icon.svg         Browser icon
+src/
+  app.js                Startup and coordination between session and UI
+  session.js            Current run, selection, board switching, and autosaving
+  core/
+    config.js           Shared board sizes, scoring, and dealing constants
+    shapes.js           Shape patterns and their families, defined together
+    geometry.js         Rotation, shape identity, placement, and fit checks
+    dealer.js           Weighted, board-aware piece generation
+    engine.js           Public game rules API, line clearing, and scoring
+    validation.js       Saved board/piece validation
+  services/
+    storage.js          Version-compatible localStorage and score history
+    audio.js            Optional Web Audio tones
+  ui/
+    dom.js              Small DOM, formatting, and accessibility helpers
+    messages.js         French gameplay messages and help text
+    view.js             Board/tray rendering, previews, and animations
+    controls.js         Mouse, touch, wheel, and keyboard bindings
+    dialogs.js          Help, scores, restart confirmation, and game-over dialogs
+    theme.js            Theme preference and toggle
+styles/
+  main.css              Stylesheet entry point
+  tokens.css            Shared light/dark colors and block palettes
+  base.css              Typography and common controls
+  layout.css            Height-aware desktop/mobile layout
+  game.css              Board, pieces, stats, and game animations
+  dialogs.css           Dialogs and leaderboard
+scripts/
+  serve.js              Dependency-free local HTTP server
+  check.js              Syntax and local module/asset-reference checks
+tests/
+  engine.test.js        Rules, geometry, shape variety, and dealing regressions
+  storage.test.js       Existing saves, autosave, sessions, and storage failures
+```
 
-Change the title, “Made for you” note, and subtitle in `index.html`. Colors are the CSS custom properties at the start of `style.css`. `icon.svg` is the browser icon.
+Core modules never access the DOM or localStorage. `session.js` owns game transitions, `storage.js` owns the save envelope, and UI modules receive those objects rather than using global variables. Theme colors live in one token file instead of repeated dark-mode selector overrides.
 
-## Saved data
+## Check changes
 
-The `little-blocks.v1` localStorage key stores the three boards, scores, bests, selected board size, and sound preference. Saves happen after every move, rotation, and size change. Restarted runs also enter the score list. Scores are local to the browser, device, and site origin; they do not sync between devices. Clearing site data deletes saves, and private browsing may discard them on exit. If storage is blocked or full, the game stays playable and shows a saving-unavailable message. The browser may share the origin with other repositories under the same GitHub username, so rename the storage key if hosting independent copies.
+```sh
+node --test
+node scripts/check.js
+```
 
-## Developer checks
+The equivalent npm commands are `npm test` and `npm run check` when npm is installed.
 
-With Node.js installed: `node --test tests/engine.test.cjs`.
+Tests cover all board sizes, 44 connected and distinct shapes, rotation, collisions, simultaneous clears, scoring, automatic game-over decisions, helpful dealing, no immediate repeat, selected/all-piece rotation through saves, legacy save loading, and blocked/full localStorage. `check` validates JavaScript syntax and local import/asset paths. It does not replace visual browser testing.
 
-The game uses plain browser JavaScript; Node.js is only needed for the optional tests. Tests cover simultaneous clears, collisions, rotations, game-over decisions, all board sizes, and save validation.
+## Publish on GitHub Pages
 
+1. Use a **public** repository for GitHub Pages on GitHub Free.
+2. Upload this folder's **contents** to the repository root, including the entire `src`, `styles`, and `assets` directories. `index.html` must be directly at the root.
+3. In **Settings → Pages**, choose **Deploy from a branch**, your publishing branch (`master` in the existing setup), and **/ (root)**. Save.
+4. Wait for the Pages deployment to finish. Use the URL shown there, normally `https://USERNAME.github.io/REPOSITORY/`.
 
+No npm install/build, backend, workflow file, or paid domain is required for hosting. All asset and module paths are relative, including inside CSS, so repository subpaths work.
+
+### Updating from the previous flat layout
+
+Upload the **entire new structure**, not just one JavaScript file. Ensure all new directories are present before replacing `index.html` when uploading in multiple commits. The new entry point is `src/app.js`.
+
+The old root-level `engine.js`, `game.js`, `style.css`, `play-layout.css`, `theme.css`, `icon.svg`, and `tests/engine.test.cjs` are obsolete and can be deleted from the repository after the new files are uploaded. Leaving them temporarily will not affect the new game, because `index.html` no longer loads them.
+
+Official Pages instructions: https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site
+
+## Saved data and customization
+
+The storage key remains **`little-blocks.v1`**. The envelope and game-state fields retain compatibility with the previous release, preserving board cells, piece shapes/orientations/colors, score, lines, streak, moves, per-size history, and preferences. Autosave runs after every move and rotation. Closing the tab needs no extra save step.
+
+Saves belong to a browser profile and site origin. Clearing site data deletes them; private browsing may discard them. Localhost and GitHub Pages have separate saves. Changing only code or repository paths on the same origin does not change the key. If storage is blocked or full, the UI reports that saving is unavailable and play continues in memory.
+
+Change the dedication/title in `index.html`, French messages in `src/ui/messages.js`, palettes in `styles/tokens.css`, or scoring/dealing constants in `src/core/config.js`. To add a shape, add its `family` and `pattern` together in `src/core/shapes.js`, then update and run the catalog tests.
