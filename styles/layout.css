@@ -1,0 +1,90 @@
+.topbar {
+  max-width: 1400px;
+  height: 54px;
+  margin: auto;
+  padding: 8px 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid var(--border);
+}
+.brand { display: flex; align-items: center; gap: 10px; font-size: 23px; font-weight: 700; letter-spacing: -1px; }
+.brand-mark { font-size: 30px; color: var(--muted); }
+.brand-dot { margin-left: -10px; color: var(--heart); }
+.top-note { margin-left: auto; color: var(--muted); font-size: 12px; letter-spacing: 1px; }
+main {
+  max-width: 1240px;
+  height: calc(100vh - 66px);
+  height: calc(100dvh - 66px);
+  margin: 6px auto;
+  padding: 0 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.intro { flex-shrink: 0; }
+.dedication { display: flex; align-items: center; gap: 10px; }
+.dedication > span { font-size: 28px; color: var(--heart); }
+.dedication div { font: italic 18px Georgia, serif; }
+.dedication small { margin-left: 12px; font: 12px Arial, sans-serif; color: var(--muted); }
+.game {
+  flex: 1;
+  min-height: 0;
+  padding: 14px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 220px;
+  grid-template-rows: auto auto auto minmax(0, 1fr) auto;
+  gap: 10px 20px;
+  border: 1px solid var(--border);
+  border-radius: 23px;
+  background: var(--panel);
+  box-shadow: 0 16px 55px #0000000b;
+}
+.game-heading, .size-row, .stats, .status { grid-column: 1 / -1; }
+.game-heading, .size-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.board-wrap {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  container-type: size;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.play-tools { display: flex; flex-direction: column; min-width: 0; min-height: 0; gap: 8px; }
+.tray-caption { display: flex; flex-direction: column; gap: 4px; font-size: 10px; letter-spacing: 1px; color: var(--muted); }
+#combo { letter-spacing: 0; }
+.controls { display: grid; grid-template-columns: 1fr; gap: 6px; }
+.controls > span { text-align: center; font-size: 11px; line-height: 1.5; color: var(--muted); }
+.status { margin: 0; text-align: center; font-size: 12px; line-height: 1.4; color: var(--muted); }
+@media (max-width: 850px) {
+  .topbar { height: 48px; padding: 6px 12px; gap: 6px; }
+  .top-note { display: none; }
+  #theme { margin-left: auto; }
+  .brand { font-size: 20px; }
+  .icon-button { width: 34px; height: 34px; }
+  main {
+    height: calc(100vh - 56px);
+    height: calc(100dvh - 56px);
+    margin: 4px auto;
+    padding: 0 8px;
+    gap: 6px;
+  }
+  .intro { align-self: center; }
+  .dedication div { font-size: 17px; }
+  .dedication > span { font-size: 25px; }
+  .dedication small { margin-left: 6px; font-size: 10px; }
+  .game { display: flex; flex-direction: column; padding: 10px; gap: 8px; border-radius: 18px; }
+  .game > * { width: 100%; flex-shrink: 0; }
+  .game-heading h2 { font-size: 19px; }
+  .reset-button { min-height: 34px; padding: 6px 10px; font-size: 12px; }
+  .board-wrap { flex: 1; }
+  .play-tools { display: grid; grid-template-columns: minmax(0, 1fr) auto; }
+  .tray-caption, .controls > span, .controls kbd { display: none; }
+  .text-button, .status { font-size: 10px; }
+}
+/* Keep controls reachable rather than clipping exceptionally short windows. */
+@media (max-height: 540px) {
+  main { min-height: 480px; height: auto; }
+  .game { flex: none; height: 444px; }
+}

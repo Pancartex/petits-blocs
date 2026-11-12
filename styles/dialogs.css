@@ -1,0 +1,21 @@
+dialog {
+  position: fixed;
+  width: calc(100% - 32px);
+  max-width: 410px;
+  padding: 35px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: var(--panel);
+  color: var(--text);
+  box-shadow: 0 20px 90px #263b3333;
+}
+dialog::backdrop { background: #293c3355; backdrop-filter: blur(4px); }
+.dialog-close { position: absolute; right: 13px; top: 13px; }
+dialog h2 { margin: 8px 0 20px; font-size: 26px; }
+dialog p, dialog li { color: var(--muted); font-size: 14px; line-height: 1.7; }
+dialog ol { padding-left: 20px; }
+dialog .primary { margin: 10px 8px 0 0; }
+.big-score { margin: 15px 0; font: 50px Georgia, serif; }
+.score-list { padding: 0; list-style: none; }
+.score-list li { display: flex; justify-content: space-between; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+.score-list small { font-size: 10px; }
