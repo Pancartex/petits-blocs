@@ -1,7 +1,7 @@
 import { $, formatNumber, formatDate } from './dom.js';
 import { helpHTML } from './messages.js';
 
-export function createDialogs(model, store, restart) {
+export function createDialogs(model, store, restart, rewind) {
   const dialog = $('#dialog');
 
   function open(html) {
@@ -17,8 +17,10 @@ export function createDialogs(model, store, restart) {
       <p>${state.lines} lignes effacées sur la grille ${state.size} × ${state.size}.
       Aucun bloc restant ne peut être placé, même en le tournant.
       Ton score est conservé ${store.available ? 'sur cet appareil' : 'uniquement pour cette visite'}.</p>
-      <button class="primary" id="again">Encore une petite partie</button>`);
+      <button class="primary" id="again">Encore une petite partie</button>
+      ${state.rewind ? '<button class="secondary" id="undo-end">Annuler le dernier coup</button>' : ''}`);
     $('#again').onclick = restart;
+    if (state.rewind) $('#undo-end').onclick = rewind;
   }
 
   function confirmRestart() {

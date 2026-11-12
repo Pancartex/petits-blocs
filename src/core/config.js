@@ -7,6 +7,11 @@ export const DEALING = Object.freeze({
   duplicateWeight: 0.015,
   familyWeight: 0.08,
   helpfulChance: 0.9,
+  crowdingStart: 0.3,
+  crowdedAt: 0.75,
+  largeMinimum: 0.08,
+  mediumMinimum: 0.35,
+  fourCellMinimum: 0.7,
 });
 
 export const SCORING = Object.freeze({

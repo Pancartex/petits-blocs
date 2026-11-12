@@ -20,6 +20,7 @@ export function bindControls(model, view, dialogs, actions) {
   }
 
   $('#restart').onclick = dialogs.confirmRestart;
+  $('#rewind').onclick = actions.rewind;
   $('#help').onclick = dialogs.help;
   $('#scores').onclick = dialogs.scores;
   $('#rotate').onclick = () => actions.rotate();

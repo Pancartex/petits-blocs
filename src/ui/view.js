@@ -87,6 +87,7 @@ export function createView(model, store) {
     $('#score').textContent = formatNumber(state.score);
     $('#best').textContent = formatNumber(store.best(state));
     $('#lines').textContent = formatNumber(state.lines);
+    $('#rewind').disabled = !state.rewind;
     $('#combo').textContent = state.combo > 1 ? `${state.combo} coups gagnants de suite ♡` : 'Prends ton temps';
     const label = selected < 0 ? 'Tourner les trois pièces de 90 degrés vers la droite' : 'Tourner la pièce sélectionnée de 90 degrés vers la droite';
     setLabel($('#rotate'), label);

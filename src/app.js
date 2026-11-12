@@ -13,7 +13,7 @@ const { model } = session;
 const view = createView(model, store);
 const playTone = createAudio();
 const toggleTheme = initializeTheme(store);
-const dialogs = createDialogs(model, store, restart);
+const dialogs = createDialogs(model, store, restart, rewind);
 
 function enter(size, announce = true) {
   session.enter(size);
@@ -53,8 +53,15 @@ function restart() {
   view.say(messages.restarted);
 }
 
+function rewind() {
+  if (!session.rewind()) return;
+  dialogs.close();
+  view.render();
+  view.say(messages.rewound);
+}
+
 bindControls(model, view, dialogs, {
-  enter, select, place, rotate,
+  enter, select, place, rotate, rewind,
   deselect() { session.deselect(); view.render(); },
   toggleTheme() { toggleTheme(); view.updateSaveStatus(); },
   toggleSound() {
